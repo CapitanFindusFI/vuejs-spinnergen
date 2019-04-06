@@ -1,6 +1,5 @@
 <template>
     <div id="app">
-        <modals-container/>
         <header class="container-fluid">
             <div class="container">
                 <h1>
@@ -72,6 +71,7 @@
 
     import RotatingSquare from './components/presets/RotatingSquare';
     import BouncingCircle from './components/presets/BouncingCircle';
+    import OutputModal from "./components/modals/OutputModal";
     import Cropper from "vue-croppa/src/cropper";
 
     const initialState = () => {
@@ -95,7 +95,8 @@
         components: {
             Cropper,
             'rotating-square': RotatingSquare,
-            'bouncing-circle': BouncingCircle
+            'bouncing-circle': BouncingCircle,
+            'modal-output': OutputModal
         },
         data() {
             return initialState();
@@ -136,7 +137,12 @@
 
                     return css.split(placeholderString).join(replaceWith);
                 }).then(finalCss => {
-                    console.log(finalCss);
+                    const previewComponent = this.$refs['previewComponent'];
+
+                    this.$modal.show(OutputModal, {
+                        html: previewComponent.$el.querySelector('.spinner').outerHTML,
+                        css: finalCss
+                    });
                 });
             }
         },

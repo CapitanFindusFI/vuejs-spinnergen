@@ -11,5 +11,6 @@ new Vue({
 
 Vue.use(Croppa);
 Vue.use(VModal, {
-    dynamic: true
+    dynamic: true,
+    injectModalsContainer: true
 });
