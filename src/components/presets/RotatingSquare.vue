@@ -1,23 +1,37 @@
 <template>
-    <div class="preview">
-        <h4>Rotating square</h4>
-        <div class="spinner"></div>
+    <div class="row align-items-center">
+        <div class="col-8">
+            <h4>Rotating Square</h4>
+        </div>
+        <div class="col-4">
+            <div class="spinner rotating-square" :style="styleProperties"></div>
+        </div>
     </div>
 </template>
 
 <script>
+    import '../../assets/presets/rotating-square.css';
+
+    const initialState = () => {
+        return {
+            cssPath: '/public/assets/presets/rotating-square.css'
+        }
+    };
+
     export default {
-        name: "RotatingSquare"
+        name: "RotatingSquare",
+        data() {
+            return initialState();
+        },
+        props: [
+            'styleProperties'
+        ],
+        methods: {}
     }
 </script>
 
 <style scoped>
     .spinner {
-        width: 40px;
-        height: 40px;
-        background-color: #333;
-
-        margin: 100px auto;
         -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
         animation: sk-rotateplane 1.2s infinite ease-in-out;
     }

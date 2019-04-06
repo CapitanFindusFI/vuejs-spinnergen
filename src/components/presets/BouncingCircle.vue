@@ -1,0 +1,79 @@
+<template>
+    <div class="row align-items-center">
+        <div class="col-8">
+            <h4>Bouncing Circle</h4>
+        </div>
+        <div class="col-4">
+            <div class="spinner bouncing-circle">
+                <div class="double-bounce1" :style="styleProperties"></div>
+                <div class="double-bounce2" :style="styleProperties"></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import '../../assets/presets/bouncing-circle.css';
+
+    const initialState = () => {
+        return {
+            cssPath: '/public/assets/presets/bouncing-circle.css',
+        }
+    };
+
+    export default {
+        name: "BouncingCircle",
+        data() {
+            return initialState();
+        },
+        props: [
+            'styleProperties'
+        ],
+        methods: {}
+    }
+</script>
+
+<style scoped>
+    .spinner {
+        position: relative;
+    }
+
+    .double-bounce1, .double-bounce2 {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        opacity: 0.6;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-size: cover;
+
+        -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+        animation: sk-bounce 2.0s infinite ease-in-out;
+    }
+
+    .double-bounce2 {
+        -webkit-animation-delay: -1.0s;
+        animation-delay: -1.0s;
+    }
+
+    @-webkit-keyframes sk-bounce {
+        0%, 100% {
+            -webkit-transform: scale(0.0)
+        }
+        50% {
+            -webkit-transform: scale(1.0)
+        }
+    }
+
+    @keyframes sk-bounce {
+        0%, 100% {
+            transform: scale(0.0);
+            -webkit-transform: scale(0.0);
+        }
+        50% {
+            transform: scale(1.0);
+            -webkit-transform: scale(1.0);
+        }
+    }
+</style>
