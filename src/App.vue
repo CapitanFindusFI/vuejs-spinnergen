@@ -61,7 +61,12 @@
             </div>
         </div>
         <footer class="section">
-
+            <div class="container">
+                <p>
+                    Made with <i class="fas fa-heart"></i>
+                    using <a href="https://github.com/CapitanFindusFI" target="_blank">Github</a>
+                </p>
+            </div>
         </footer>
     </div>
 </template>

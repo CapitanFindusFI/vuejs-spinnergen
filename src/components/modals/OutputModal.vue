@@ -1,10 +1,17 @@
 <template>
     <div id="output-modal">
         <header>
-            <h1>Copy your CSS</h1>
+            <h1>Here's your code</h1>
         </header>
-        <div>
-
+        <div class="columns">
+            <div class="column is-half">
+                <h6 class="subtitle is-6">HTML</h6>
+                <pre>{{html}}</pre>
+            </div>
+            <div class="column is-half">
+                <h6 class="subtitle is-6">CSS</h6>
+                <pre>{{css}}</pre>
+            </div>
         </div>
         <footer>
 
@@ -13,9 +20,33 @@
 </template>
 
 <script>
+    const initialState = () => {
+        return {
+            css: null,
+            html: null
+        };
+    };
+
     export default {
         name: "OutputModal",
+        data: initialState,
+        methods: {
+            cleanCss(dirtyCss) {
+                const cleanCSS = dirtyCss;
+                return cleanCSS;
+            },
+            cleanHTML(dirtyHTML) {
+                const cleanHTML = dirtyHTML;
+                return cleanHTML;
+            }
+        },
         mounted() {
+            const passedCSS = this.$attrs.css;
+            this.css = this.cleanCss(passedCSS);
+
+            const passedHTML = this.$attrs.html;
+            this.html = this.cleanHTML(passedHTML);
+
             // eslint-disable-next-line no-console
             console.log(this);
         }
