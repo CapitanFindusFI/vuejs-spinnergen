@@ -1,9 +1,9 @@
 <template>
-    <div class="row align-items-center">
-        <div class="col-8">
-            <h4>Bouncing Circle</h4>
+    <div class="columns is-vcentered">
+        <div class="column is-two-thirds">
+            <h5 class="subtitle is-5">Bouncing Circle</h5>
         </div>
-        <div class="col-4">
+        <div class="column is-one-third">
             <div class="spinner bouncing-circle">
                 <div class="double-bounce1" :style="styleProperties"></div>
                 <div class="double-bounce2" :style="styleProperties"></div>

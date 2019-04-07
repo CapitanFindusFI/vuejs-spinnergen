@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <header class="container-fluid">
+        <header class="section">
             <div class="container">
                 <h1>
                     <img src="./assets/logo.png" alt="Vue"/>
@@ -8,15 +8,17 @@
                 </h1>
             </div>
         </header>
-        <div id="wrapper" class="container-fluid">
+        <div id="wrapper" class="section">
             <div class="container">
-                <div class="row">
-                    <aside class="col-lg-4 col-md-6 col-sm-12">
-                        <div id="presets" class="row">
-                            <h2 class="col-12 text-center mb-5">
-                                Choose a preset
-                            </h2>
-                            <div class="col-12 preset-item"
+                <div class="columns">
+                    <aside class="column is-one-third">
+                        <div id="presets" class="columns is-multiline">
+                            <div class="column is-full">
+                                <h4 class="title is-4">
+                                    Choose a preset
+                                </h4>
+                            </div>
+                            <div class="column is-full preset-item"
                                  v-for="preset in loadedPresets"
                                  :key="preset.id"
                                  @click="setPreset(preset.name)">
@@ -25,29 +27,31 @@
                         </div>
                     </aside>
 
-                    <main class="col-lg-8 col-md-6 col-sm-12">
+                    <main class="column is-two-thirds">
                         <div id="preview" class="text-center">
-                            <h2 class="col-12 text-center mb-5">Chosen preset</h2>
+                            <h4 class="title is-4">Chosen preset</h4>
                             <component ref="previewComponent" :is="dynamicComponent"
                                        :styleProperties="presetComponentStyle"></component>
                         </div>
                         <div id="crop-area" v-if="showCropArea">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <h2 class="text-center mb-5">Crop image</h2>
+                            <div class="columns is-multiline">
+                                <div class="column is-full">
+                                    <h4 class="subtitle is-4">Crop image</h4>
+                                </div>
+                                <div class="column is-half">
                                     <cropper v-model="cropperModel"></cropper>
-                                    <button type="button" class="btn-block btn-primary"
+                                </div>
+                                <div class="column is-half">
+                                    <button type="button" class="button is-primary is-fullwidth"
                                             @click="generateCrop()">
                                         <i class="fas fa-save"></i> Save
                                     </button>
-                                    <button type="button" class="btn-block btn-primary"
+                                    <button type="button" class="button is-primary is-fullwidth"
+                                            :class="{'is-loading' : isLoadingCSS}"
                                             :disabled="!canExtractCss"
                                             @click="extractCss()">
                                         <i class="fas fa-upload"></i> Extract CSS
                                     </button>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-
                                 </div>
                             </div>
                         </div>
@@ -56,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <footer>
+        <footer class="section">
 
         </footer>
     </div>
@@ -66,8 +70,9 @@
     /* eslint-disable no-console */
 
     import './assets/app.css';
-    import 'bootstrap/dist/css/bootstrap.css';
-    import 'vue-croppa/dist/vue-croppa.css'
+    import 'bulma/css/bulma.css';
+    import '@fortawesome/fontawesome-free/css/all.css';
+    import 'vue-croppa/dist/vue-croppa.css';
 
     import RotatingSquare from './components/presets/RotatingSquare';
     import BouncingCircle from './components/presets/BouncingCircle';
@@ -86,7 +91,8 @@
             canExtractCss: false,
             cropperModel: null,
             loadedPresets: [],
-            windowPresets: window.spinnerPresets
+            windowPresets: window.spinnerPresets,
+            isLoadingCSS: false
         }
     };
 
@@ -118,6 +124,8 @@
                 }
             },
             extractCss() {
+                this.isLoadingCSS = true;
+
                 fetch(this.windowPresets[this.dynamicComponent]).then(response => {
                     return response.text();
                 }).then(css => {
@@ -143,6 +151,8 @@
                         html: previewComponent.$el.querySelector('.spinner').outerHTML,
                         css: finalCss
                     });
+
+                    this.isLoadingCSS = false;
                 });
             }
         },
