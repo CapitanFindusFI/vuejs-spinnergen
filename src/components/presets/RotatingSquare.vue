@@ -14,7 +14,8 @@
 
     const initialState = () => {
         return {
-            cssPath: '/public/assets/presets/rotating-square.css'
+            cssPath: '/assets/presets/rotating-square/style.css',
+            htmlPath: '/assets/presets/rotating-square/template.html',
         }
     };
 

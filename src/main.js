@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Croppa from 'vue-croppa';
-import VModal from 'vue-js-modal'
+import Toasted from 'vue-toasted';
 
 Vue.config.productionTip = false;
 
@@ -10,7 +10,4 @@ new Vue({
 }).$mount('#app');
 
 Vue.use(Croppa);
-Vue.use(VModal, {
-    dynamic: true,
-    injectModalsContainer: true
-});
+Vue.use(Toasted);

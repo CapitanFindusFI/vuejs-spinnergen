@@ -17,7 +17,8 @@
 
     const initialState = () => {
         return {
-            cssPath: '/public/assets/presets/bouncing-circle.css',
+            cssPath: '/assets/presets/bouncing-circle/style.css',
+            htmlPath: '/assets/presets/bouncing-circle/template.html'
         }
     };
 

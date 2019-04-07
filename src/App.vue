@@ -46,16 +46,26 @@
                                             @click="generateCrop()">
                                         <i class="fas fa-save"></i> Save
                                     </button>
-                                    <button type="button" class="button is-primary is-fullwidth"
-                                            :class="{'is-loading' : isLoadingCSS}"
+                                    <button type="button" class="button is-warning is-fullwidth"
+                                            :class="{'is-loading' : isLoadingAssets, 'is-disabled' : !canExtractCss}"
                                             :disabled="!canExtractCss"
-                                            @click="extractCss()">
+                                            v-if="!isLoadedAssets"
+                                            @click="extractAssets()">
                                         <i class="fas fa-upload"></i> Extract CSS
+                                    </button>
+                                    <button type="button" class="button is-success is-fullwidth"
+                                            v-if="loadedAssets.css"
+                                            @click="copyCSS()">
+                                        <i class="fas fa-sad-cry"></i> Copy CSS
+                                    </button>
+                                    <button type="button" class="button is-success is-fullwidth"
+                                            v-if="loadedAssets.html"
+                                            @click="copyHTML()">
+                                        <i class="fas fa-sad-cry"></i> Copy HTML
                                     </button>
                                 </div>
                             </div>
                         </div>
-
                     </main>
                 </div>
             </div>
@@ -84,20 +94,32 @@
     import OutputModal from "./components/modals/OutputModal";
     import Cropper from "vue-croppa/src/cropper";
 
+    const defaultAssets = () => {
+        return {
+            css: null,
+            html: null
+        };
+    };
+
+    const defaultPresetStyle = () => {
+        return {
+            "background-size": "cover",
+            "background-color": "#333"
+        };
+    };
+
     const initialState = () => {
         return {
             dynamicComponent: null,
-            presetDefaultStyle: {
-                "background-size": "cover",
-                "background-color": "#333"
-            },
+            presetDefaultStyle: defaultPresetStyle(),
             presetComponentStyle: null,
             showCropArea: false,
             canExtractCss: false,
             cropperModel: null,
             loadedPresets: [],
-            windowPresets: window.spinnerPresets,
-            isLoadingCSS: false
+            isLoadingAssets: false,
+            isLoadedAssets: false,
+            loadedAssets: defaultAssets()
         }
     };
 
@@ -117,6 +139,11 @@
                 this.dynamicComponent = componentName;
                 this.presetComponentStyle = this.presetDefaultStyle;
                 this.showCropArea = true;
+
+                this.canExtractCss = false;
+                this.presetComponentStyle = defaultPresetStyle();
+                this.loadedAssets = defaultAssets();
+                this.isLoadedAssets = false;
             },
             generateCrop() {
                 const dataURL = this.cropperModel.generateDataUrl('image/jpeg', 0.8);
@@ -128,10 +155,26 @@
                     };
                 }
             },
-            extractCss() {
-                this.isLoadingCSS = true;
+            extractAssets() {
+                this.isLoadingAssets = true;
 
-                fetch(this.windowPresets[this.dynamicComponent]).then(response => {
+                const dynamicComponent = this.$refs['previewComponent'];
+
+                Promise.all([
+                    this.extractCSS(dynamicComponent.cssPath),
+                    this.extractHTML(dynamicComponent.htmlPath)
+                ]).then(response => {
+                    console.log(response);
+
+                    this.loadedAssets.css = response[0];
+                    this.loadedAssets.html = response[1];
+
+                    this.isLoadingAssets = false;
+                    this.isLoadedAssets = true;
+                });
+            },
+            extractCSS(cssPath) {
+                return fetch(cssPath).then(response => {
                     return response.text();
                 }).then(css => {
                     const replaceWith = Object.keys(this.presetComponentStyle).map(key => {
@@ -149,15 +192,29 @@
                     }
 
                     return css.split(placeholderString).join(replaceWith);
-                }).then(finalCss => {
-                    const previewComponent = this.$refs['previewComponent'];
-
-                    this.$modal.show(OutputModal, {
-                        html: previewComponent.$el.querySelector('.spinner').outerHTML,
-                        css: finalCss
+                });
+            },
+            extractHTML(htmlPath) {
+                return fetch(htmlPath).then(response => {
+                    return response.text();
+                });
+            },
+            copyCSS() {
+                navigator.clipboard.writeText(this.loadedAssets.css).then(() => {
+                    this.$toasted.show("CSS copied to clipboard", {
+                        theme: "toasted-primary",
+                        position: "top-center",
+                        duration: 3000
                     });
-
-                    this.isLoadingCSS = false;
+                });
+            },
+            copyHTML() {
+                navigator.clipboard.writeText(this.loadedAssets.html).then(() => {
+                    this.$toasted.show("HTML copied to clipboard", {
+                        theme: "toasted-primary",
+                        position: "top-center",
+                        duration: 3000
+                    });
                 });
             }
         },
