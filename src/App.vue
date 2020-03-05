@@ -232,52 +232,61 @@
     }
 </script>
 
-<style>
+<style lang="scss">
     #app {
+        height: 100vh;
+
+        header {
+            height: 80px;
+        }
+
+        footer {
+            height: 60px;
+        }
+
+        #wrapper {
+            height: calc(100vh - 140px);
+
+            aside {
+                border-right: 1px solid #ccc;
+
+                #presets {
+                    padding-right: 16px;
+
+                    .preset-item {
+                        cursor: pointer;
+                        margin-bottom: 16px;
+                        padding-bottom: 16px;
+                        border-bottom: 1px solid #ccc;
+
+                        .spinner {
+                            width: 50px;
+                            height: 50px;
+                        }
+
+                        h4 {
+                            text-align: left;
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+
+            main {
+                #preview {
+                    border-bottom: 1px solid #ccc;
+                    padding-bottom: 16px;
+
+                    .spinner {
+                        width: 100px;
+                        height: 100px;
+                    }
+                }
+            }
+        }
     }
 
     .spinner {
         margin: 0;
     }
-
-    #wrapper {
-
-    }
-
-    #wrapper aside {
-        border-right: 1px solid #ccc;
-    }
-
-    #wrapper aside #presets {
-        padding-right: 16px;
-    }
-
-    #wrapper aside #presets .preset-item {
-        cursor: pointer;
-        margin-bottom: 16px;
-        padding-bottom: 16px;
-        border-bottom: 1px solid #ccc;
-    }
-
-    #wrapper aside #presets .preset-item .spinner {
-        width: 50px;
-        height: 50px;
-    }
-
-    #wrapper aside #presets .preset-item h4 {
-        text-align: left;
-        margin: 0;
-    }
-
-    #wrapper main #preview {
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 16px;
-    }
-
-    #wrapper main #preview .spinner {
-        width: 100px;
-        height: 100px;
-    }
-
-
 </style>
