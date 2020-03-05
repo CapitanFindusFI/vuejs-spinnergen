@@ -1,21 +1,25 @@
 <template>
     <div id="app">
         <header class="py-3 container-fluid">
-            <div class="container">
-                <h1>
-                    <img src="./assets/logo.png" alt="Vue"/>
-                    Image Spinner Generator
-                </h1>
+            <div class="container h-100">
+                <div class="row align-items-center h-100">
+                    <div class="col-12">
+                        <h1 class="m-0">
+                            <img src="./assets/logo.png" alt="Vue"/>
+                            Image Spinner Generator
+                        </h1>
+                    </div>
+                </div>
             </div>
         </header>
         <div id="wrapper" class="container-fluid">
             <div class="container h-100">
                 <div class="row align-items-stretch h-100">
-                    <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="col-lg-4 col-md-6 col-sm-12 border-right">
                         <aside id="presets">
-                            <h4 class="title is-4">Choose a preset</h4>
+                            <h3>Choose a preset</h3>
                             <div class="row">
-                                <div class="col-12"
+                                <div class="col-12 preset-item border-bottom"
                                      v-for="preset in loadedPresets"
                                      :key="preset.id"
                                      @click="setPreset(preset.name)">
@@ -25,9 +29,9 @@
                         </aside>
                     </div>
                     <div class="col-lg-8 col-md-6 col-sm-12">
-                        <main id="preview text-center">
-                            <h4 class="title is-4">Chosen preset</h4>
-                            <div class="row">
+                        <main id="preview" class="text-center">
+                            <h3>Chosen preset</h3>
+                            <div class="row mb-3">
                                 <div class="col-12 text-center">
                                     <component ref="previewComponent"
                                                :is="dynamicComponent"
@@ -77,11 +81,13 @@
             </div>
         </div>
         <footer class="py-2 container-fluid">
-            <div class="container">
-                <p>
-                    Made with <i class="fas fa-heart"></i>
-                    using <a href="https://github.com/CapitanFindusFI" target="_blank">Github</a>
-                </p>
+            <div class="container h-100">
+                <div class="row align-items-center h-100">
+                    <div class="col-12">
+                        Made with <i class="fas fa-heart"></i>
+                        using <a href="https://github.com/CapitanFindusFI" target="_blank">Github</a>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
@@ -249,9 +255,6 @@
             height: calc(100vh - 140px);
 
             aside#presets {
-                border-right: 1px solid #ccc;
-                padding-right: 16px;
-
                 .preset-item {
                     cursor: pointer;
                     margin-bottom: 16px;
@@ -271,9 +274,6 @@
             }
 
             main#preview {
-                border-bottom: 1px solid #ccc;
-                padding-bottom: 16px;
-
                 .spinner {
                     width: 100px;
                     height: 100px;

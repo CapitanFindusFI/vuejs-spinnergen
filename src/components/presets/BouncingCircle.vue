@@ -1,7 +1,7 @@
 <template>
     <div class="row align-items-center">
         <div class="col-lg-8 col-md-6 col-sm-12">
-            <h5 class="subtitle is-5">Bouncing Circle</h5>
+            <h5 class="m-0">Bouncing Circle</h5>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12">
             <div class="spinner bouncing-circle">
