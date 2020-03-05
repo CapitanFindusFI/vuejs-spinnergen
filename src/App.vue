@@ -45,10 +45,22 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="row align-items-center">
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <cropper v-model="cropperModel"></cropper>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                                                <cropper ref="cropper" v-model="cropperModel"></cropper>
+                                                <div class="row align-items-center">
+                                                    <div class="col-12 text-center">
+                                                        <button type="button" class="btn btn-outline-primary"
+                                                                @click="zoomIn">
+                                                            <i class="fas fa-search-plus"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-primary"
+                                                                @click="zoomOut">
+                                                            <i class="fas fa-search-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <button type="button" class="btn btn-primary btn-block"
                                                         @click="generateCrop()">
                                                     <i class="fas fa-save"></i> Save
@@ -223,6 +235,12 @@
                         duration: 3000
                     });
                 });
+            },
+            zoomIn() {
+                this.$refs['cropper'].zoomIn()
+            },
+            zoomOut() {
+                this.$refs['cropper'].zoomOut()
             }
         },
         mounted() {
