@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <header class="section">
+        <header class="py-3 container-fluid">
             <div class="container">
                 <h1>
                     <img src="./assets/logo.png" alt="Vue"/>
@@ -8,69 +8,75 @@
                 </h1>
             </div>
         </header>
-        <div id="wrapper" class="section">
-            <div class="container">
-                <div class="columns">
-                    <aside class="column is-one-third">
-                        <div id="presets" class="columns is-multiline">
-                            <div class="column is-full">
-                                <h4 class="title is-4">
-                                    Choose a preset
-                                </h4>
+        <div id="wrapper" class="container-fluid">
+            <div class="container h-100">
+                <div class="row align-items-stretch h-100">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <aside id="presets">
+                            <h4 class="title is-4">Choose a preset</h4>
+                            <div class="row">
+                                <div class="col-12"
+                                     v-for="preset in loadedPresets"
+                                     :key="preset.id"
+                                     @click="setPreset(preset.name)">
+                                    <component :is="preset.name" :styleProperties="presetDefaultStyle"></component>
+                                </div>
                             </div>
-                            <div class="column is-full preset-item"
-                                 v-for="preset in loadedPresets"
-                                 :key="preset.id"
-                                 @click="setPreset(preset.name)">
-                                <component :is="preset.name" :styleProperties="presetDefaultStyle"></component>
-                            </div>
-                        </div>
-                    </aside>
-
-                    <main class="column is-two-thirds">
-                        <div id="preview" class="text-center">
+                        </aside>
+                    </div>
+                    <div class="col-lg-8 col-md-6 col-sm-12">
+                        <main id="preview text-center">
                             <h4 class="title is-4">Chosen preset</h4>
-                            <component ref="previewComponent" :is="dynamicComponent"
-                                       :styleProperties="presetComponentStyle"></component>
-                        </div>
-                        <div id="crop-area" v-if="showCropArea">
-                            <div class="columns is-multiline">
-                                <div class="column is-full">
-                                    <h4 class="subtitle is-4">Crop image</h4>
-                                </div>
-                                <div class="column is-half">
-                                    <cropper v-model="cropperModel"></cropper>
-                                </div>
-                                <div class="column is-half">
-                                    <button type="button" class="button is-primary is-fullwidth"
-                                            @click="generateCrop()">
-                                        <i class="fas fa-save"></i> Save
-                                    </button>
-                                    <button type="button" class="button is-warning is-fullwidth"
-                                            :class="{'is-loading' : isLoadingAssets, 'is-disabled' : !canExtractCss}"
-                                            :disabled="!canExtractCss"
-                                            v-if="!isLoadedAssets"
-                                            @click="extractAssets()">
-                                        <i class="fas fa-upload"></i> Extract CSS
-                                    </button>
-                                    <button type="button" class="button is-success is-fullwidth"
-                                            v-if="loadedAssets.css"
-                                            @click="copyCSS()">
-                                        <i class="fas fa-sad-cry"></i> Copy CSS
-                                    </button>
-                                    <button type="button" class="button is-success is-fullwidth"
-                                            v-if="loadedAssets.html"
-                                            @click="copyHTML()">
-                                        <i class="fas fa-sad-cry"></i> Copy HTML
-                                    </button>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <component ref="previewComponent"
+                                               :is="dynamicComponent"
+                                               :styleProperties="presetComponentStyle"></component>
                                 </div>
                             </div>
-                        </div>
-                    </main>
+                            <div id="crop-area" v-if="showCropArea">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="subtitle is-4">Crop image</h4>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <cropper v-model="cropperModel"></cropper>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <button type="button" class="btn btn-primary btn-block"
+                                                        @click="generateCrop()">
+                                                    <i class="fas fa-save"></i> Save
+                                                </button>
+                                                <button type="button" class="btn btn-warning btn-block"
+                                                        :class="{'is-loading' : isLoadingAssets, 'is-disabled' : !canExtractCss}"
+                                                        :disabled="!canExtractCss"
+                                                        v-if="!isLoadedAssets"
+                                                        @click="extractAssets()">
+                                                    <i class="fas fa-upload"></i> Extract CSS
+                                                </button>
+                                                <button type="button" class="btn btn-success btn-block"
+                                                        v-if="loadedAssets.css"
+                                                        @click="copyCSS()">
+                                                    <i class="fas fa-sad-cry"></i> Copy CSS
+                                                </button>
+                                                <button type="button" class="btn btn-success btn-block"
+                                                        v-if="loadedAssets.html"
+                                                        @click="copyHTML()">
+                                                    <i class="fas fa-sad-cry"></i> Copy HTML
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                    </div>
                 </div>
             </div>
         </div>
-        <footer class="section">
+        <footer class="py-2 container-fluid">
             <div class="container">
                 <p>
                     Made with <i class="fas fa-heart"></i>
@@ -83,11 +89,6 @@
 
 <script>
     /* eslint-disable no-console */
-
-    import './assets/app.css';
-    import 'bulma/css/bulma.css';
-    import '@fortawesome/fontawesome-free/css/all.css';
-    import 'vue-croppa/dist/vue-croppa.css';
 
     import RotatingSquare from './components/presets/RotatingSquare';
     import BouncingCircle from './components/presets/BouncingCircle';
@@ -247,40 +248,35 @@
         #wrapper {
             height: calc(100vh - 140px);
 
-            aside {
+            aside#presets {
                 border-right: 1px solid #ccc;
+                padding-right: 16px;
 
-                #presets {
-                    padding-right: 16px;
+                .preset-item {
+                    cursor: pointer;
+                    margin-bottom: 16px;
+                    padding-bottom: 16px;
+                    border-bottom: 1px solid #ccc;
 
-                    .preset-item {
-                        cursor: pointer;
-                        margin-bottom: 16px;
-                        padding-bottom: 16px;
-                        border-bottom: 1px solid #ccc;
+                    .spinner {
+                        width: 50px;
+                        height: 50px;
+                    }
 
-                        .spinner {
-                            width: 50px;
-                            height: 50px;
-                        }
-
-                        h4 {
-                            text-align: left;
-                            margin: 0;
-                        }
+                    h4 {
+                        text-align: left;
+                        margin: 0;
                     }
                 }
             }
 
-            main {
-                #preview {
-                    border-bottom: 1px solid #ccc;
-                    padding-bottom: 16px;
+            main#preview {
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 16px;
 
-                    .spinner {
-                        width: 100px;
-                        height: 100px;
-                    }
+                .spinner {
+                    width: 100px;
+                    height: 100px;
                 }
             }
         }

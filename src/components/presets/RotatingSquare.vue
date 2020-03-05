@@ -1,9 +1,9 @@
 <template>
-    <div class="columns is-vcentered">
-        <div class="column is-two-thirds">
+    <div class="row align-items-center">
+        <div class="col-lg-8 col-md-6 col-sm-12">
             <h5 class="subtitle is-5">Rotating Square</h5>
         </div>
-        <div class="column is-one-third">
+        <div class="col-lg-4 col-md-6 col-sm-12">
             <div class="spinner rotating-square" :style="styleProperties"></div>
         </div>
     </div>

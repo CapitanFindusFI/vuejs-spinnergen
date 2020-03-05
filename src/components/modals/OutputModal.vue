@@ -3,12 +3,12 @@
         <header>
             <h1>Here's your code</h1>
         </header>
-        <div class="columns">
-            <div class="column is-half">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
                 <h6 class="subtitle is-6">HTML</h6>
                 <pre>{{html}}</pre>
             </div>
-            <div class="column is-half">
+            <div class="col-lg-6 col-md-6 col-sm-12">
                 <h6 class="subtitle is-6">CSS</h6>
                 <pre>{{css}}</pre>
             </div>
