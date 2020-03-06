@@ -6,7 +6,7 @@
                     <div class="col-12">
                         <h1 class="m-0">
                             <img src="./assets/logo.png" alt="Vue"/>
-                            Image Spinner Generator
+                            Vue.js Spinnergen
                         </h1>
                     </div>
                 </div>
